@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
+import CurrencyToggle from "@/components/CurrencyToggle";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -47,6 +48,7 @@ const Navigation = () => {
             >
               Restaurant
             </button>
+            <CurrencyToggle />
             <Button
               onClick={() => scrollToSection("rooms")}
               className="bg-primary hover:bg-primary/90"
@@ -91,6 +93,7 @@ const Navigation = () => {
             >
               Restaurant
             </button>
+            <CurrencyToggle />
             <Button
               onClick={() => scrollToSection("rooms")}
               className="bg-primary hover:bg-primary/90 w-full"
