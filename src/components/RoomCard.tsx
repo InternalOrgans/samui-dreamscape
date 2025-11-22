@@ -10,16 +10,18 @@ import { format } from "date-fns";
 import { useState } from "react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { useCurrency } from "@/contexts/CurrencyContext";
 
 interface RoomCardProps {
   image: string;
   title: string;
   description: string;
-  price: string;
+  priceUSD: number;
   features: string[];
 }
 
-const RoomCard = ({ image, title, description, price, features }: RoomCardProps) => {
+const RoomCard = ({ image, title, description, priceUSD, features }: RoomCardProps) => {
+  const { convertPrice } = useCurrency();
   const [checkIn, setCheckIn] = useState<Date>();
   const [checkOut, setCheckOut] = useState<Date>();
   const [guests, setGuests] = useState("2");
@@ -61,7 +63,7 @@ const RoomCard = ({ image, title, description, price, features }: RoomCardProps)
             </li>
           ))}
         </ul>
-        <p className="text-3xl font-playfair font-bold text-primary">{price}</p>
+        <p className="text-3xl font-playfair font-bold text-primary">{convertPrice(priceUSD)}</p>
         <p className="text-sm text-muted-foreground">per night</p>
       </CardContent>
       <CardFooter>

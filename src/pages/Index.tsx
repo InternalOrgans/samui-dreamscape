@@ -3,6 +3,10 @@ import HeroCarousel from "@/components/HeroCarousel";
 import RoomCard from "@/components/RoomCard";
 import AttractionCard from "@/components/AttractionCard";
 import ReviewCard from "@/components/ReviewCard";
+import RestaurantReservation from "@/components/RestaurantReservation";
+import AccoladesSection from "@/components/AccoladesSection";
+import PromotionalBanner from "@/components/PromotionalBanner";
+import { CurrencyProvider, useCurrency } from "@/contexts/CurrencyContext";
 import roomVilla from "@/assets/room-villa.jpg";
 import roomDeluxe from "@/assets/room-deluxe.jpg";
 import roomSuite from "@/assets/room-suite.jpg";
@@ -12,13 +16,14 @@ import attractionWaterfall from "@/assets/attraction-waterfall.jpg";
 import restaurantFood from "@/assets/restaurant-food.jpg";
 import { Card, CardContent } from "@/components/ui/card";
 
-const Index = () => {
+const IndexContent = () => {
+  const { convertPrice } = useCurrency();
   const rooms = [
     {
       image: roomVilla,
       title: "Beachfront Villa",
       description: "Luxurious beachfront accommodation with private terrace and ocean views",
-      price: "$450",
+      priceUSD: 450,
       features: [
         "Ocean view",
         "Private terrace",
@@ -31,7 +36,7 @@ const Index = () => {
       image: roomDeluxe,
       title: "Deluxe Garden Room",
       description: "Elegant room surrounded by tropical gardens with modern Thai design",
-      price: "$280",
+      priceUSD: 280,
       features: [
         "Garden view",
         "Balcony",
@@ -44,7 +49,7 @@ const Index = () => {
       image: roomSuite,
       title: "Premium Suite",
       description: "Spacious suite with separate living area and serene garden views",
-      price: "$350",
+      priceUSD: 350,
       features: [
         "Living area",
         "Garden view",
@@ -96,21 +101,21 @@ const Index = () => {
 
   const menuItems = {
     appetizers: [
-      { name: "Tom Yum Goong", description: "Spicy and sour soup with prawns", price: "$12" },
-      { name: "Spring Rolls", description: "Fresh vegetables wrapped in rice paper", price: "$8" },
-      { name: "Satay Chicken", description: "Grilled chicken skewers with peanut sauce", price: "$10" },
+      { name: "Tom Yum Goong", description: "Spicy and sour soup with prawns", priceUSD: 12 },
+      { name: "Spring Rolls", description: "Fresh vegetables wrapped in rice paper", priceUSD: 8 },
+      { name: "Satay Chicken", description: "Grilled chicken skewers with peanut sauce", priceUSD: 10 },
     ],
     mains: [
-      { name: "Pad Thai", description: "Stir-fried rice noodles with prawns", price: "$18" },
-      { name: "Green Curry", description: "Coconut curry with chicken and vegetables", price: "$16" },
-      { name: "Massaman Curry", description: "Rich curry with beef and potatoes", price: "$20" },
-      { name: "Grilled Sea Bass", description: "Fresh catch with Thai herbs", price: "$28" },
+      { name: "Pad Thai", description: "Stir-fried rice noodles with prawns", priceUSD: 18 },
+      { name: "Green Curry", description: "Coconut curry with chicken and vegetables", priceUSD: 16 },
+      { name: "Massaman Curry", description: "Rich curry with beef and potatoes", priceUSD: 20 },
+      { name: "Grilled Sea Bass", description: "Fresh catch with Thai herbs", priceUSD: 28 },
     ],
     cocktails: [
-      { name: "Tropical Paradise", description: "Rum, mango, passion fruit, coconut", price: "$14" },
-      { name: "Thai Sunset", description: "Vodka, lychee, lime, ginger", price: "$12" },
-      { name: "Samui Breeze", description: "Gin, cucumber, mint, elderflower", price: "$13" },
-      { name: "Coconut Mojito", description: "White rum, coconut water, lime, mint", price: "$12" },
+      { name: "Tropical Paradise", description: "Rum, mango, passion fruit, coconut", priceUSD: 14 },
+      { name: "Thai Sunset", description: "Vodka, lychee, lime, ginger", priceUSD: 12 },
+      { name: "Samui Breeze", description: "Gin, cucumber, mint, elderflower", priceUSD: 13 },
+      { name: "Coconut Mojito", description: "White rum, coconut water, lime, mint", priceUSD: 12 },
     ],
   };
 
@@ -119,6 +124,8 @@ const Index = () => {
       <Navigation />
       
       <HeroCarousel />
+
+      <PromotionalBanner />
 
       {/* Rooms Section */}
       <section id="rooms" className="py-20 px-4 bg-secondary/20">
@@ -138,6 +145,8 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      <AccoladesSection />
 
       {/* Attractions Section */}
       <section id="attractions" className="py-20 px-4">
@@ -180,13 +189,14 @@ const Index = () => {
       {/* Restaurant & Menu Section */}
       <section id="restaurant" className="py-20 px-4">
         <div className="container mx-auto">
-          <div className="text-center mb-12">
+          <div className="text-center mb-6">
             <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
               Ocean View Restaurant
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
               Savor authentic Thai cuisine and tropical cocktails while enjoying stunning ocean views
             </p>
+            <RestaurantReservation />
           </div>
           
           <div className="mb-12">
@@ -209,7 +219,7 @@ const Index = () => {
                     <div key={index} className="border-b border-border pb-4 last:border-0">
                       <div className="flex justify-between items-start mb-1">
                         <h4 className="font-semibold text-foreground">{item.name}</h4>
-                        <span className="text-primary font-semibold">{item.price}</span>
+                        <span className="text-primary font-semibold">{convertPrice(item.priceUSD)}</span>
                       </div>
                       <p className="text-sm text-muted-foreground">{item.description}</p>
                     </div>
@@ -229,7 +239,7 @@ const Index = () => {
                     <div key={index} className="border-b border-border pb-4 last:border-0">
                       <div className="flex justify-between items-start mb-1">
                         <h4 className="font-semibold text-foreground">{item.name}</h4>
-                        <span className="text-primary font-semibold">{item.price}</span>
+                        <span className="text-primary font-semibold">{convertPrice(item.priceUSD)}</span>
                       </div>
                       <p className="text-sm text-muted-foreground">{item.description}</p>
                     </div>
@@ -249,7 +259,7 @@ const Index = () => {
                     <div key={index} className="border-b border-border pb-4 last:border-0">
                       <div className="flex justify-between items-start mb-1">
                         <h4 className="font-semibold text-foreground">{item.name}</h4>
-                        <span className="text-primary font-semibold">{item.price}</span>
+                        <span className="text-primary font-semibold">{convertPrice(item.priceUSD)}</span>
                       </div>
                       <p className="text-sm text-muted-foreground">{item.description}</p>
                     </div>
@@ -276,6 +286,14 @@ const Index = () => {
         </div>
       </footer>
     </div>
+  );
+};
+
+const Index = () => {
+  return (
+    <CurrencyProvider>
+      <IndexContent />
+    </CurrencyProvider>
   );
 };
 
